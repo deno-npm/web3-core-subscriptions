@@ -1,6 +1,6 @@
 # web3-core-subscriptions
 
-[![NPM Package][npm-image]][npm-url] [![Dependency Status][deps-image]][deps-url] [![Dev Dependency Status][deps-dev-image]][deps-dev-url]tus][deps-image]][deps-url] [![Dev Dependency Status][deps-dev-image]][deps-dev-url]
+[![NPM Package][npm-image]][npm-url] [![Dependency Status][deps-image]][deps-url] ![Dev Dependency Status][deps-dev-image]
 
 This is a sub-package of [web3.js][repo]
 
