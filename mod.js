@@ -14,51 +14,50 @@
     You should have received a copy of the GNU Lesser General Public License
     along with web3.js.  If not, see <http://www.gnu.org/licenses/>.
 */
-import Subscription from './src/subscription.js';
+import Subscription from "./src/subscription.js";
 
 var Subscriptions = function Subscriptions(options) {
-    this.name = options.name;
-    this.type = options.type;
-    this.subscriptions = options.subscriptions || {};
-    this.requestManager = null;
+  this.name = options.name;
+  this.type = options.type;
+  this.subscriptions = options.subscriptions || {};
+  this.requestManager = null;
 };
-
 
 Subscriptions.prototype.setRequestManager = function (rm) {
-    this.requestManager = rm;
+  this.requestManager = rm;
 };
-
 
 Subscriptions.prototype.attachToObject = function (obj) {
-    var func = this.buildCall();
-    var name = this.name.split('.');
-    if (name.length > 1) {
-        obj[name[0]] = obj[name[0]] || {};
-        obj[name[0]][name[1]] = func;
-    } else {
-        obj[name[0]] = func;
+  var func = this.buildCall();
+  var name = this.name.split(".");
+  if (name.length > 1) {
+    obj[name[0]] = obj[name[0]] || {};
+    obj[name[0]][name[1]] = func;
+  } else {
+    obj[name[0]] = func;
+  }
+};
+
+Subscriptions.prototype.buildCall = function () {
+  var _this = this;
+
+  return function () {
+    if (!_this.subscriptions[arguments[0]]) {
+      console.warn(
+        "Subscription " + JSON.stringify(arguments[0]) +
+          " doesn't exist. Subscribing anyway.",
+      );
     }
+
+    var subscription = new Subscription({
+      subscription: _this.subscriptions[arguments[0]] || {}, // Subscript might not exist
+      requestManager: _this.requestManager,
+      type: _this.type,
+    });
+
+    return subscription.subscribe.apply(subscription, arguments);
+  };
 };
-
-
-Subscriptions.prototype.buildCall = function() {
-    var _this = this;
-
-    return function(){
-        if(!_this.subscriptions[arguments[0]]) {
-            console.warn('Subscription '+ JSON.stringify(arguments[0]) +' doesn\'t exist. Subscribing anyway.');
-        }
-
-        var subscription = new Subscription({
-            subscription: _this.subscriptions[arguments[0]] || {}, // Subscript might not exist
-            requestManager: _this.requestManager,
-            type: _this.type
-        });
-
-        return subscription.subscribe.apply(subscription, arguments);
-    };
-};
-
 
 export {
   Subscription as subscription,

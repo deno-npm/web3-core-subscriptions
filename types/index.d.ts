@@ -13,64 +13,67 @@
 */
 
 export class Subscription<T> {
-    constructor(options: SubscriptionOptions);
+  constructor(options: SubscriptionOptions);
 
-    id: string;
-    options: SubscriptionOptions;
-    callback: () => void;
-    arguments: any;
-    lastBlock: number;
+  id: string;
+  options: SubscriptionOptions;
+  callback: () => void;
+  arguments: any;
+  lastBlock: number;
 
-    subscribe(callback?: (error: Error, result: T) => void): Subscription<T>;
+  subscribe(callback?: (error: Error, result: T) => void): Subscription<T>;
 
-    unsubscribe(
-        callback?: (error: Error, result: boolean) => void
-    ): Promise<undefined | boolean>;
+  unsubscribe(
+    callback?: (error: Error, result: boolean) => void,
+  ): Promise<undefined | boolean>;
 
-    on(type: 'data', handler: (data: T) => void): Subscription<T>;
+  on(type: "data", handler: (data: T) => void): Subscription<T>;
 
-    on(type: 'changed', handler: (data: T) => void): Subscription<T>;
+  on(type: "changed", handler: (data: T) => void): Subscription<T>;
 
-    on(type: 'connected', handler: (subscriptionId: string) => void): Subscription<T>;
+  on(
+    type: "connected",
+    handler: (subscriptionId: string) => void,
+  ): Subscription<T>;
 
-    on(type: 'error', handler: (data: Error) => void): Subscription<T>;
+  on(type: "error", handler: (data: Error) => void): Subscription<T>;
 }
 
 export class Subscriptions {
-    constructor(options: SubscriptionsOptions);
+  constructor(options: SubscriptionsOptions);
 
-    name: string;
-    type: string;
-    subscriptions: SubscriptionsModel;
-    readonly requestManager: any;
+  name: string;
+  type: string;
+  subscriptions: SubscriptionsModel;
+  readonly requestManager: any;
 
-    attachToObject(obj: any): void;
+  attachToObject(obj: any): void;
 
-    setRequestManager(requestManager: any): void;
+  setRequestManager(requestManager: any): void;
 
-    buildCall(): () => any;
+  buildCall(): () => any;
 }
 
 export interface SubscriptionOptions {
-    subscription: string;
-    type: string;
-    requestManager: any;
+  subscription: string;
+  type: string;
+  requestManager: any;
 }
 
 export interface SubscriptionsOptions {
-    name: string;
-    type: string;
-    subscriptions: SubscriptionsModel;
+  name: string;
+  type: string;
+  subscriptions: SubscriptionsModel;
 }
 
 export interface SubscriptionsModel {
-    [name: string]: SubscriptionModel;
+  [name: string]: SubscriptionModel;
 }
 
 export interface SubscriptionModel {
-    subscriptionName: string;
-    params: number;
-    outputFormatter: () => void;
-    inputFormatter: Array<() => void>;
-    subscriptionHandler: () => void;
+  subscriptionName: string;
+  params: number;
+  outputFormatter: () => void;
+  inputFormatter: Array<() => void>;
+  subscriptionHandler: () => void;
 }

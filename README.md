@@ -11,27 +11,16 @@ Please read the [documentation][docs] for more.
 ## Usage
 
 ```js
-const Web3Subscriptions = require('web3-core-subscriptions');
-
-const sub = new Web3Subscriptions({
-    name: 'subscribe',
-    type: 'eth',
-    subscriptions: {
-        'newBlockHeaders': {
-            subscriptionName: 'newHeads',
-            params: 0,
-            outputFormatter: formatters.outputBlockFormatter
-        },
-        'pendingTransactions': {
-            params: 0,
-            outputFormatter: formatters.outputTransactionFormatter
-        }
-    }
-});
-sub.attachToObject(myCoolLib);
-
-myCoolLib.subscribe('newBlockHeaders', function(){ ... });
+import {
+  subscription,
+  subscriptions,
+} from "https://deno.land/x/npm_web3_core_subscriptions@0.0.1/mod.js";
 ```
+
+## TODO
+- [ ] Add tests
+- [ ] Merge types
+- [ ] Add use example
 
 [docs]: http://web3js.readthedocs.io/en/1.0/
 [repo]: https://github.com/ethereum/web3.js
